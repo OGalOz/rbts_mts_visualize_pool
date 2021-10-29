@@ -4,7 +4,7 @@
 name: RBTnSeq Mutant Pool Visualizer 
 
 tooltip: |
-    Perform some kind of method
+    Using a mutant pool and its genome - create a visualization to explore the data.
 
 screenshots: []
 
