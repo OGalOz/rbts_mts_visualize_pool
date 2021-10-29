@@ -13,7 +13,7 @@ import subprocess
 from full.GeneTableGenomePoolFileToScfPosBC import GeneTable_Barcodes_To_BarcodeGenes
 from full.ScfPosBC_To_BarChartData import ScfPosBC_Info_To_Scaffolds
 from full.ScfPosBC_to_MhtnData import PosScfBCDataToZScrPointsForValues
-
+from full.PoolStats import RunPoolStatsPy
 
 
 """
@@ -44,14 +44,22 @@ def CreateCompleteHTML_dir(genome_fna_fp, genes_table_fp, poolfile_fp, op_dir,
             raise Exception("Please reserve tmp dir for work")
     """
 
-    '''
     # Getting PoolStats
+    success_bool, stats_d = RunPoolStatsPy(poolfile_fp, genes_table_fp, nTotalReads=None)
+
+    if not success_bool:
+        pool_stats_d = {"failed": True}
+    else:
+        pool_stats_d = stats_d
+        pool_stats_d["failed"] = False
+
+    with open(os.path.join(op_dir, "JS", "StatsDisplay", "PoolStats.js"), "w" ) as g:
+        g.write("window.pool_stats_d = " + json.dumps(pool_stats_d, indent=2))
+    '''
     R_op = RunPoolStatsR(poolfile_fp, genes_table_fp)
     R_log_d = RlogToDict(R_op)
     R_log_d["genome_name"] = genome_name
 
-    with open(os.path.join(op_dir, "JS", "StatsDisplay", "PoolStats.js"), "w" ) as g:
-        g.write("window.pool_stats_d = " + json.dumps(R_log_d, indent=2))
     '''
 
     scfPosBC_fp = os.path.join(tmp_dir,"ScfPosBC.json")

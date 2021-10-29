@@ -110,16 +110,19 @@ class rbts_mts_visualize_pool:
         CreateCompleteHTML_dir(genome_fna_fp, genes_table_fp, poolfile_fp, op_dir, 
                                 genome_name, td, HTML_dir)
 
+        # Recall that op_dir is what we want to return to the user.
 
-        report = KBaseReport(self.callback_url)
-        report_info = report.create({'report': {'objects_created':[],
-                                                'text_message': params['parameter_1']},
-                                                'workspace_name': params['workspace_name']})
+        # Prepare final output to return to user
+        report_params = PrepareUserOutputs(params['workspace_name'], dfu, op_dir)
+
+        #Returning file in zipped format:-------------------------------------
+        report_util = KBaseReport(self.callback_url)
+        report_info = report_util.create_extended_report(report_params)
+
         output = {
             'report_name': report_info['name'],
             'report_ref': report_info['ref'],
         }
-
         #END run_rbts_mts_visualize_pool
 
         # At some point might do deeper type checking...

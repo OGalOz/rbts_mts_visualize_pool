@@ -8,12 +8,12 @@ import statistics
 
 
 
-def RunPoolStatsPy(mutant_pool_fp, genes_table_fp, nTotalReads):
+def RunPoolStatsPy(mutant_pool_fp, genes_table_fp, nTotalReads=None):
     """
     Args:
         mutant_pool_fp (str): Path to mutant pool file
         genes_table_fp (str): Path to genes table
-        nTotalReads (int): Number of total reads from all FASTQ files.
+        [nTotalReads] (int): Number of total reads from all FASTQ files.
 
     Returns:
         list<success_bool, stats_d>:
@@ -94,7 +94,8 @@ def RunPoolStatsPy(mutant_pool_fp, genes_table_fp, nTotalReads):
     return [True, final_stats_d]
 
 
-def PoolReport(mutant_pool_fp, pool_g, genes_df, nTotalReads, unhit_fp=None, 
+def PoolReport(mutant_pool_fp, pool_g, genes_df, 
+               nTotalReads=None, unhit_fp=None, 
                surprise_fp=None, hitcounts_fp=None, debug=False):
     """
     Args:
@@ -103,7 +104,7 @@ def PoolReport(mutant_pool_fp, pool_g, genes_df, nTotalReads, unhit_fp=None,
         pool_g (pandas.DataFrame): is like the pool dataframe just with additional 
                                columns 'f' and 
                                'locusId' for insertions that are within genes
-        nTotalReads (int): Number of total reads from all FASTQ files.
+        [nTotalReads] (int): Number of total reads from all FASTQ files.
     Returns:
         pool_report_d (python dict):
             

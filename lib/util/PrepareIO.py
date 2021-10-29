@@ -73,32 +73,12 @@ def PrepareProgramInputs(params, cfg_d):
     return [genome_fna_fp, genes_table_fp, pool_fp, genome_scientific_name]
 
 
-def PrepareUserOutputs(vp, cfg_d):
+def PrepareUserOutputs(workspace_name, dfu, op_HTML_dir):
     """
-    cfg_d:
-        username: s,
-        ws_id:
-        ws_obj:
-        workspace_name: s,
-        pool_fp: s,
-        dfu:
-        css_style_fp: s
-        Main_HTML_report_fp: s
-        model_test: b
-        gene_table_fp: s
-
-    vp:
-        genome_ref: s,
-        fastq_ref_list: list<s>,
-        pool_description: s,
-        KB_Pool_Bool: b,
-       
-    Description:
-        Upload PoolFile to make KBaseRBTnSeq.RBTS_PoolFile object.
     """
 
    
-
+    '''
     # We make a directory containing the resultant files
     res_dir = os.path.join(cfg_d['tmp_dir'], "results")
     os.mkdir(res_dir)
@@ -120,31 +100,29 @@ def PrepareUserOutputs(vp, cfg_d):
            'description': 'The directory of outputs from running' \
             + ' Map TnSeq and Design Random Pool'
            }
+    '''
     
     # Preparing HTML output
-    html_dir = os.path.join(cfg_d["tmp_dir"], "HTML")
-
-    HTML_report_shock_id = cfg_d['dfu'].file_to_shock({
-            "file_path": html_dir,
+    HTML_report_shock_id = dfu.file_to_shock({
+            "file_path": op_HTML_dir,
             "pack": "zip"
             })['shock_id']
 
     HTML_report_d_l = [{"shock_id": HTML_report_shock_id,
-                        "name": os.path.basename(os.path.join(html_dir,"FullDisplay_index.html")),
+                        "name": os.path.basename(os.path.join(op_HTML_dir,"FullDisplay_index.html")),
                         "label": "MutantReport",
                         "description": "HTML Summary Report for MapTnSeq and Design Random Pool app"
                         }]
 
 
     report_params = {
-            'workspace_name' : cfg_d['workspace_name'],
+            'workspace_name' : workspace_name,
             "html_links": HTML_report_d_l,
             "direct_html_link_index": 0,
             "html_window_height": 333,
             "message": "Finished Running MapTnSeq"
             }
 
-    report_params["file_links"] = [dir_link]
 
 
     return report_params
