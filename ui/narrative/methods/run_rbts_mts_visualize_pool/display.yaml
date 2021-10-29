@@ -1,0 +1,43 @@
+#
+# define display information
+#
+name: Method Name Here
+
+tooltip: |
+    Perform some kind of method
+
+screenshots: []
+
+icon: icon.png
+
+#
+# define a set of similar apps that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            [app1, app2]
+        next:
+            [app3, app4]
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    genome_ref :
+        ui-name : |
+            Target Genome   
+        short-hint : |
+            The Genome you're checking your reads against to find locations of barcodes.
+        long-hint  : |
+            This is the genome to whose genes we are going to match barcodes so they can be used to measure the abundance of strains with those genes interrupted.
+    mutantpool_ref :
+        ui-name : |
+            Mutant Pool 
+        short-hint : |
+            The mutantpool related to these reads KBaseRBTnSeq.RBTS_MutantPool 
+        long-hint  : |
+            The mutantpool related to these reads may be the output from the MapTnSeq app.
+            File type is KBaseRBTnSeq.RBTS_MutantPool
+description : |
+    <p>Create a visualization from a pool file and genome object.</p>
